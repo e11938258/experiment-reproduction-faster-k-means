@@ -13,7 +13,7 @@ REPETITION_COUNT = 10
 # output destination configuration
 RESULTS_FOLDER = "results/"
 RESULTS_RUNNER_NAME = "NONE"
-RESULT_BASE_FILENAME= "birch"
+RESULT_BASE_FILENAME= "birch-affects-"
 
 def readBirchDataset():
 	pointList = []
