@@ -15,7 +15,6 @@ def readBirchDataset():
 	        currentPointString = line[:-1]
 	        # parse the points
 	        currentPoint = currentPointString.split("    ")
-	        # drop the first element (empty space)
 	        # convert to numbers
 	        point = [int(point) for point in currentPoint if point != '']
 	        # add item to the list

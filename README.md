@@ -13,3 +13,11 @@
 - python version not mentioned - 2 required
 - datasets not formatted easily - we modified the dataset
 	- birch space removal
+
+
+## TODO:
+- check whether dataset dimensions match the paper
+	- birch - MATCHES
+	- covtype
+	- mnist768
+	- synthetic
