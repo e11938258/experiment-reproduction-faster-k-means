@@ -69,6 +69,7 @@ class KPP():
 			self._dist_from_centers()
 			self.mu.append(self._choose_next_center())
 
+
 # kplus = KPP(numClusters,X=np.array(pointList))
 # kplus.init_centers()
 # cList = [Point(x,len(x)) for x in kplus.mu]

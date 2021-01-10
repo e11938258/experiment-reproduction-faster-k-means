@@ -163,10 +163,10 @@ class Kmeans:
 		startTime = time.time()
 		timeStamp = 0
 		if self.error != None:
-  			timeStamp = math.log(self.error)
-  		endTime = time.time()
-  		self.errorList.append(timeStamp)
-  		self.ti += 0.5 	
+			timeStamp = math.log(self.error)
+		endTime = time.time()
+		self.errorList.append(timeStamp)
+		self.ti += 0.5 	
 
 	def mainFunction(self):
 		self.iteration = 1

@@ -7,3 +7,9 @@
 * different seeds
 * memory constraints
 * single-threaded (if applicaple)
+
+
+## Running issues
+- python version not mentioned - 2 required
+- datasets not formatted easily - we modified the dataset
+	- birch space removal
