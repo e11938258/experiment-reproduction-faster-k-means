@@ -37,19 +37,25 @@ def outputRuntimes(runtimeDefault, runtimeHeuristic):
 		os.makedirs(RESULTS_FOLDER)
 	# write the runtimes
 	timestamp = str(int(time.time()))
-	with open(RESULTS_FOLDER + RESULT_BASE_FILENAME + "-" + RESULTS_RUNNER_NAME + "-" +timestamp, 'w') as filehandle:
+	with open(RESULTS_FOLDER + RESULT_BASE_FILENAME + "-" + str(k) + "-" + str(kmeansThreshold) + "-" + str(seedType) + "-" + RESULTS_RUNNER_NAME + "-" + timestamp, 'w') as filehandle:
 		filehandle.write(",".join([str(runtime) for runtime in runtimeDefault]))
 		filehandle.write("\n")
 		filehandle.write(",".join([str(runtime) for runtime in runtimeHeuristic]))
+
 
 
 repetitionsRun = 0
 timeTakenDefault = []
 
 # initialize the parameters
-pointList = readBirchDataset()
+#pointList = readBirchDataset()
 k = 50
 kmeansThreshold = 0.31
+seedType = "random"
+
+import sys
+outputRuntimes([1,2,3],[4,5,6])
+sys.exit(0)
 
 
 while repetitionsRun < REPETITION_COUNT:
