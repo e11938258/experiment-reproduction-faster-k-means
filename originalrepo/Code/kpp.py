@@ -28,7 +28,7 @@ class Point:
 class KPP():
 	def __init__(self, K, X=None, N=0):
 		self.K = K
-		if X == None:
+		if X.any() == None:
 			if N == 0:
 				raise Exception("If no data is provided, a parameter N (number of points) is needed")
 			else:

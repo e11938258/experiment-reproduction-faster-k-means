@@ -2,8 +2,6 @@ import pandas as pd
 import numpy as np
 import cPickle as pickle
 
-
-
 # input dataset configuration
 DATASET_BASE_LOCATION = "originalrepo/Dataset/"
 DATASET_NAME_BIRCH = 'birch.txt'
@@ -21,7 +19,6 @@ def guardDimensionality(point, dimensionality):
         raise Exception("Unexpected point length!")
         print(point)
         print(len(point))
-
 
 def loadMnistDataset():
     dimensionality = 784

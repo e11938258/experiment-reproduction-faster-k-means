@@ -13,6 +13,7 @@
 - python version not mentioned - 2 required
 - datasets not formatted easily - we modified the dataset
 	- birch space removal
+- not runnable with the latest p2 numpy version (1.16)
 
 
 ## TODO:
@@ -22,3 +23,5 @@
 	- mnist768 - MATCHES (60000 * 784)
 	- synthetic - MATCHES (100000 * 100)
     - cup98lrn - MATCHES (95412 * 481)
+
+- Find MSE for different algorithms & datasets
