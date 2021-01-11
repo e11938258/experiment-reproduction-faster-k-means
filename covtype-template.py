@@ -2,24 +2,11 @@ from originalrepo.Code.kmeans import *
 import pandas as pd
 import numpy as np
 
-DATASET_BASE_LOCATION = "originalrepo/Dataset/" 
-
-
-def loadcovtype():
-
-         data = []
-        with open(DATASET_BASE_LOCATION + 'covtype.data',"r", low_memory=False) as inputFile:
-		for line in inputFile:
-			data.append([float(x) for x in line.strip().split(delimiter)])
-	return data
-
-
-
-
-
+from util.datasetloader import * 
 
 
 pointList = loadcovtype()
+
 k = 50
 kmeansThreshold = 0.31
 

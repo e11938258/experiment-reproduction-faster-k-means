@@ -1,42 +1,13 @@
 from originalrepo.Code.kmeans import *
 import sys
 
+from util.datasetloader import * 
 
 
-DATASET_BASE_LOCATION = "originalrepo/Dataset/" 
-DATASET_NAME = "mnist768"
-DIMENSIONALITY = 784
 
-OBSERVATION_PRINT_THRESHOLD = 1000
 
-def guardDimensionality(point):
-	if len(point) != DIMENSIONALITY:
-		raise Exception("Unexpected point length!")
-		print(point)
-		print(len(point))
+pointList = loadMnistDataset()
 
-def readMnistDataset():
-	pointList = []
-	observationsLoaded = 0
-	# open file and read the content in a list
-	with open(DATASET_BASE_LOCATION + DATASET_NAME, 'r') as filehandle:
-	    for line in filehandle:
-	        # remove linebreak which is the last character of the string
-	        currentPointString = line[:-1]
-	        # parse the points
-	        currentPoint = currentPointString.split(",")
-	        # convert to numbers
-	        point = [float(point) for point in currentPoint if point != '']
-	        # ensure point of correct size was extracted
-	        guardDimensionality(point)
-	        # add item to the list
-	        pointList.append(point)
-	        observationsLoaded += 1
-	        if not len(pointList)%OBSERVATION_PRINT_THRESHOLD: print("Loaded", observationsLoaded, "observations")
-	print("Dataset loaded with", len(pointList), "observations")
-	return pointList
-
-pointList = readMnistDataset()
 k = 50
 kmeansThreshold = 0.31
 # k = Number of Clusters

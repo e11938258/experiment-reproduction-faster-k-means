@@ -10,12 +10,10 @@ import originalrepo.Code.heuristic_triangleinequality as heur_inequality
 import originalrepo.Code.enhancedKmeans as def_enhanced
 import originalrepo.Code.heuristic_enhancedKmeans as heur_enhanced
 
+from util.datasetloader import * 
+
 import time
 import os
-
-# input dataset configuration
-DATASET_BASE_LOCATION = "originalrepo/Dataset/"
-DATASET_NAME = 'birch.txt'
 
 # repetition configuration
 REPETITION_COUNT = 10
@@ -24,7 +22,7 @@ MSE_TO_CONVERGE_SMALL = 4.75 * pow(10, 13)
 
 # output destination configuration
 RESULTS_FOLDER = "results/"
-RESULTS_RUNNER_NAME = "NONE"
+RESULTS_RUNNER_NAME = "TEST"
 RESULT_BASE_FILENAME = "birch-"
 
 # experiment parameter combinations
@@ -63,21 +61,6 @@ parameterCombinations = [
 ]
 
 
-def readBirchDataset():
-    pointList = []
-    # open file and read the content in a list
-    with open(DATASET_BASE_LOCATION + DATASET_NAME, 'r') as filehandle:
-        for line in filehandle:
-            # remove linebreak which is the last character of the string
-            currentPointString = line[:-1]
-            # parse the points
-            currentPoint = currentPointString.split("    ")
-            # convert to numbers
-            point = [int(point) for point in currentPoint if point != '']
-            # add item to the list
-            pointList.append(point)
-
-    return pointList
 
 
 def outputRuntimes(combination, runtimeDefault, runtimeHeuristic):
@@ -193,7 +176,10 @@ def guardValidRunner():
 guardValidRunner()
 
 # load the dataset
-pointList = readBirchDataset()
+pointList = loadBirchDataset()
+
+print pointList
+print "DatasetLoaded!"
 
 for combination in parameterCombinations:
     runExperimentWithConfiguration(pointList, combination)

@@ -18,7 +18,7 @@
 ## TODO:
 - check whether dataset dimensions match the paper
 	- birch - MATCHES (100000 * 2)
-	- covtype
+	- covtype - NOT MATCHING(581012 * 55, paper says 150000 * 55)
 	- mnist768 - MATCHES (60000 * 784)
 	- synthetic - MATCHES (100000 * 100)
     - cup98lrn - MATCHES (95412 * 481)

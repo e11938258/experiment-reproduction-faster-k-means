@@ -1,18 +1,12 @@
 from originalrepo.Code.kmeans import *
 import sys
 import numpy as np
-import cPickle as pickle
 
+from util.datasetloader import * 
 
-DATASET_BASE_LOCATION = "originalrepo/Dataset/" 
-DATASET_NAME = "synthetic"
-
-def readSyntheticDataset():
-	with open(DATASET_BASE_LOCATION + DATASET_NAME, "rb") as f:
-		numpyPointList = pickle.load(f)
-	return numpyPointList.tolist()
 
 pointList = readSyntheticDataset()
+
 k = 50
 kmeansThreshold = 0.31
 

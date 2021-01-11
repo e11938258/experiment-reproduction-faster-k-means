@@ -2,22 +2,8 @@ from originalrepo.Code.kmeans import *
 import pandas as pd
 import numpy as np
 
-DATASET_BASE_LOCATION = "originalrepo/Dataset/"
+from util.datasetloader import * 
 
-
-def loadCupDataset():
-	data = []
-	data = pd.read_csv('originalrepo/Dataset/'cup98LRN.txt', low_memory=False)
-	data = data.fillna(0)
-
-	cat_columns = data.select_dtypes([np.object]).columns
-	for col in cat_columns:
-		data[col] = data[col].astype('category')
-
-	cat_columns = data.select_dtypes(['category']).columns
-	data[cat_columns] = data[cat_columns].apply(lambda x: x.cat.codes)
-
-	return data.values.tolist()
 
 
 pointList = loadCupDataset()
