@@ -1,5 +1,12 @@
 import originalrepo.Code.kmeans as def_kmeans 
 import originalrepo.Code.heuristic_kmeans as heur_kmeans
+
+import originalrepo.Code.triangleInequality as def_inequality 
+import originalrepo.Code.heuristic_triangleinequality as heur_inequality
+
+import originalrepo.Code.enhancedKmeans as def_enhanced 
+import originalrepo.Code.heuristic_enhancedKmeans as heur_enhanced
+
 import time
 import os
 
@@ -8,7 +15,7 @@ DATASET_BASE_LOCATION = "originalrepo/Dataset/"
 DATASET_NAME = 'birch.txt'
 
 # repetition configuration
-REPETITION_COUNT = 1
+REPETITION_COUNT = 10
 MSE_TO_CONVERGE = 5*pow(10,13)
 MSE_TO_CONVERGE_SMALL = 4.75*pow(10,13)
 
@@ -16,22 +23,43 @@ MSE_TO_CONVERGE_SMALL = 4.75*pow(10,13)
 # output destination configuration
 RESULTS_FOLDER = "results/"
 RESULTS_RUNNER_NAME = "NONE"
-RESULT_BASE_FILENAME= "birch-kmeans-"
+RESULT_BASE_FILENAME= "birch-"
 
 # experiment parameter combinations
 parameterCombinations = [
-# (k, 	kmeansThreshold, 			centroidsToRemember, 	seedType, 	PIM)
-  (100, MSE_TO_CONVERGE,	 		20, 					"random", 	0.01),
-  (100, MSE_TO_CONVERGE,	 		30, 					"random", 	0),
-  (100, MSE_TO_CONVERGE, 			40, 					"random", 	0),
-  (100, MSE_TO_CONVERGE, 			50, 					"random", 	0),
-  (100, MSE_TO_CONVERGE, 			60,						"random", 	0),
-  (100, MSE_TO_CONVERGE_SMALL,	 	20, 					"random", 	0.01),
-  (100, MSE_TO_CONVERGE_SMALL,	 	30, 					"random", 	0),
-  (100, MSE_TO_CONVERGE_SMALL, 		40, 					"random", 	0),
-  (100, MSE_TO_CONVERGE_SMALL, 		50, 					"random", 	0),
-  (100, MSE_TO_CONVERGE_SMALL, 		60,						"random", 	0)
+# (k, 	kmeansThreshold, 			centroidsToRemember, 	seedType, 	PIM,	algorithm)
+  (100, MSE_TO_CONVERGE,	 		20, 					"random", 	0.01,	"kmeans"),
+  (100, MSE_TO_CONVERGE,	 		30, 					"random", 	0,		"kmeans"),
+  (100, MSE_TO_CONVERGE, 			40, 					"random", 	0,		"kmeans"),
+  (100, MSE_TO_CONVERGE, 			50, 					"random", 	0,		"kmeans"),
+  (100, MSE_TO_CONVERGE, 			60,						"random", 	0,		"kmeans"),
+  (100, MSE_TO_CONVERGE_SMALL,	 	20, 					"random", 	0.01	"kmeans"),
+  (100, MSE_TO_CONVERGE_SMALL,	 	30, 					"random", 	0,		"kmeans"),
+  (100, MSE_TO_CONVERGE_SMALL, 		40, 					"random", 	0,		"kmeans"),
+  (100, MSE_TO_CONVERGE_SMALL, 		50, 					"random", 	0,		"kmeans"),
+  (100, MSE_TO_CONVERGE_SMALL, 		60,						"random", 	0,		"kmeans"),
+  (100, MSE_TO_CONVERGE,	 		20, 					"random", 	-0.11,	"triangle"),
+  (100, MSE_TO_CONVERGE,	 		30, 					"random", 	0.04,	"triangle"),
+  (100, MSE_TO_CONVERGE, 			40, 					"random", 	0,		"triangle"),
+  (100, MSE_TO_CONVERGE, 			50, 					"random", 	0,		"triangle"),
+  (100, MSE_TO_CONVERGE, 			60,						"random", 	0,		"triangle"),
+  (100, MSE_TO_CONVERGE_SMALL,	 	20, 					"random", 	-0.11	"triangle"),
+  (100, MSE_TO_CONVERGE_SMALL,	 	30, 					"random", 	0.04,	"triangle"),
+  (100, MSE_TO_CONVERGE_SMALL, 		40, 					"random", 	0,		"triangle"),
+  (100, MSE_TO_CONVERGE_SMALL, 		50, 					"random", 	0,		"triangle"),
+  (100, MSE_TO_CONVERGE_SMALL, 		60,						"random", 	0,		"triangle"),
+  (100, MSE_TO_CONVERGE,	 		20, 					"random", 	0.002,	"enhanced"),
+  (100, MSE_TO_CONVERGE,	 		30, 					"random", 	0,		"enhanced"),
+  (100, MSE_TO_CONVERGE, 			40, 					"random", 	0,		"enhanced"),
+  (100, MSE_TO_CONVERGE, 			50, 					"random", 	0,		"enhanced"),
+  (100, MSE_TO_CONVERGE, 			60,						"random", 	0,		"enhanced"),
+  (100, MSE_TO_CONVERGE_SMALL,	 	20, 					"random", 	0.002	"enhanced"),
+  (100, MSE_TO_CONVERGE_SMALL,	 	30, 					"random", 	0,		"enhanced"),
+  (100, MSE_TO_CONVERGE_SMALL, 		40, 					"random", 	0,		"enhanced"),
+  (100, MSE_TO_CONVERGE_SMALL, 		50, 					"random", 	0,		"enhanced"),
+  (100, MSE_TO_CONVERGE_SMALL, 		60,						"random", 	0,		"enhanced"),
 ]
+
 
 def readBirchDataset():
 	pointList = []
@@ -50,13 +78,13 @@ def readBirchDataset():
 	return pointList
 
 def outputRuntimes(combination, runtimeDefault, runtimeHeuristic):
-	k, kmeansThreshold, centroidsToRemember, seedType, pim = combination
+	k, kmeansThreshold, centroidsToRemember, seedType, pim, algorithm = combination
 	# create the results folder if doesn't exist
 	if not os.path.exists(RESULTS_FOLDER):
 		os.makedirs(RESULTS_FOLDER)
 	# write the runtimes
 	timestamp = str(int(time.time()))
-	with open(RESULTS_FOLDER + RESULT_BASE_FILENAME + "-" + str(k) + "-" + str(kmeansThreshold) + "-" + str(seedType) + "-" + RESULTS_RUNNER_NAME + "-" + timestamp, 'w') as filehandle:
+	with open(RESULTS_FOLDER + RESULT_BASE_FILENAME + "-" + algorithm + "-" + str(k) + "-" + str(kmeansThreshold) + "-" + str(seedType) + "-" + RESULTS_RUNNER_NAME + "-" + timestamp, 'w') as filehandle:
 		filehandle.write(str(buildConbinationLog(combination)))
 		filehandle.write("\n")
 		filehandle.write(",".join([str(runtime) for runtime in runtimeDefault]))
@@ -67,31 +95,9 @@ def resolveInitialCentroids(pointList, seedType):
 	if seedType == "random": return None
 	if seedType == "KPP": return None 		# TODO: Implement KPP handling here
 
-def runNonHeuristic(pointList, combination):
-	# unravel the params
-	k, kmeansThreshold, centroidsToRemember, seedType, pim = combination
-	initialCentroids = resolveInitialCentroids(pointList, seedType)
-
-	repetitionsRun = 0
-	timeTakenDefault = []
-
-	while repetitionsRun < REPETITION_COUNT:
-		start_time = time.time()
-		# k = Number of Clusters
-		# pointList = List of n-dimensional points (Every point should be a list)
-		# kmeansThreshold = Percentage Change in Mean Squared Error (MSE) below which the algorithm should stop. Used as a stopping criteria
-		# initialCentroids (optional) = Provide initial seeds for centroids (List of Point() class objects). It can be generated from a list of n-dimensional points as follows:
-		# initialCentroids = [Point(x,len(x)) for x in pointList]
-		def_kmeans.Kmeans(k, pointList, kmeansThreshold, initialCentroids=initialCentroids)
-		timeTakenDefault.append(time.time() - start_time)
-		repetitionsRun += 1
-
-	print "Done running the NON-HEURISTIC approach"
-	return timeTakenDefault
-
 def runHeuristic(pointList, combination):
 	# unravel the params
-	k, kmeansThreshold, centroidsToRemember, seedType, pim = combination
+	k, kmeansThreshold, centroidsToRemember, seedType, pim, algorithm = combination
 	# calculate the MSE for heuristic from PIM
 	kmeansThresholdWithPIM = kmeansThreshold + kmeansThreshold*pim
 	initialCentroids = resolveInitialCentroids(pointList, seedType)
@@ -100,21 +106,53 @@ def runHeuristic(pointList, combination):
 	timeTakenHeur = []
 	while repetitionsRun < REPETITION_COUNT:
 		start_time = time.time()
-		# k = Number of Clusters
-		# pointList = List of n-dimensional points (Every point should be a list)
-		# kmeansThreshold = Percentage Change in Mean Squared Error (MSE) below which the algorithm should stop. Used as a stopping criteria
-		# initialCentroids (optional) = Provide initial seeds for centroids (List of Point() class objects). It can be generated from a list of n-dimensional points as follows:
-		# initialCentroids = [Point(x,len(x)) for x in pointList]
-		heur_kmeans.Kmeans(k, pointList, kmeansThresholdWithPIM, centroidsToRemember, initialCentroids=None)
+		# select and run proper algorithm variant
+		if algorithm == "kmeans":
+			heur_kmeans.Kmeans(k, pointList, kmeansThresholdWithPIM, centroidsToRemember, initialCentroids)
+		elif  algorithm == "triangle":
+			heur_inequality.Kmeans(k, pointList, kmeansThresholdWithPIM, centroidsToRemember, initialCentroids)
+		elif algorithm == "enhanced":
+			heur_enhanced.Kmeans(k, pointList, kmeansThresholdWithPIM, centroidsToRemember, initialCentroids)
+		else:
+			raise Exception("Unknown algorithm " + algorithm)
+
 		timeTakenHeur.append(time.time() - start_time)
 		repetitionsRun += 1
 
 	print "Done running the HEURISTIC approach"
 	return timeTakenHeur
 
+
+def runNonHeuristic(pointList, combination):
+	# unravel the params
+	k, kmeansThreshold, centroidsToRemember, seedType, pim, algorithm = combination
+	initialCentroids = resolveInitialCentroids(pointList, seedType)
+
+	repetitionsRun = 0
+	timeTakenDefault = []
+
+	while repetitionsRun < REPETITION_COUNT:
+		start_time = time.time()
+
+		# select and run proper algorithm variant
+		if algorithm == "kmeans":
+			def_kmeans.Kmeans(k, pointList, kmeansThreshold, initialCentroids)
+		elif  algorithm == "triangle":
+			def_inequality.Kmeans(k, pointList, kmeansThreshold, initialCentroids)
+		elif algorithm == "enhanced":
+			def_enhanced.Kmeans(k, pointList, kmeansThreshold, initialCentroids)
+		else:
+			raise Exception("Unknown algorithm " + algorithm)
+
+		timeTakenDefault.append(time.time() - start_time)
+		repetitionsRun += 1
+
+	print "Done running the NON-HEURISTIC approach"
+	return timeTakenDefault
+
 def buildConbinationLog(combination):
-	k, kmeansThreshold, centroidsToRemember, seedType, pim = combination
-	return "k=", k, "MSE", kmeansThreshold, "k'=", centroidsToRemember, "seedType=", seedType, "PIM=", pim
+	k, kmeansThreshold, centroidsToRemember, seedType, pim, algorithm = combination
+	return "k=", k, "MSE", kmeansThreshold, "k'=", centroidsToRemember, "seedType=", seedType, "PIM=", pim, "algorithm=", algorithm
 
 
 def logExperimentConfiguration(combination):
