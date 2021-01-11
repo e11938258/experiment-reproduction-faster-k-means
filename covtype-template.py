@@ -7,9 +7,6 @@ from util.datasetloader import *
 
 pointList = loadcovtype()
 
-print "Dataset loaded"
-print len(pointList)
-
 k = 50
 kmeansThreshold = 0.31
 
