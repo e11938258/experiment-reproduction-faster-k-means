@@ -1,5 +1,7 @@
 import originalrepo.Code.kmeans as def_kmeans 
 import originalrepo.Code.heuristic_kmeans as heur_kmeans
+import originalrepo.Code.kpp as kpp
+import numpy as np
 import time
 import os
 
@@ -63,14 +65,20 @@ def outputRuntimes(combination, runtimeDefault, runtimeHeuristic):
 		filehandle.write("\n")
 		filehandle.write(",".join([str(runtime) for runtime in runtimeHeuristic]))
 
-def resolveInitialCentroids(pointList, seedType):
+def runKPP(pointList, k):
+	kplus = kpp.KPP(k, X = np.array(pointList))
+	kplus.init_centers()
+	cList = [Point(x, len(x)) for x in kplus.mu]
+	return cList
+
+def resolveInitialCentroids(pointList, seedType, k):
 	if seedType == "random": return None
-	if seedType == "KPP": return None 		# TODO: Implement KPP handling here
+	if seedType == "KPP": return runKPP(pointList, k)
 
 def runNonHeuristic(pointList, combination):
 	# unravel the params
 	k, kmeansThreshold, centroidsToRemember, seedType, pim = combination
-	initialCentroids = resolveInitialCentroids(pointList, seedType)
+	initialCentroids = resolveInitialCentroids(pointList, seedType, k)
 
 	repetitionsRun = 0
 	timeTakenDefault = []
