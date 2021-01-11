@@ -21,3 +21,4 @@
 	- covtype
 	- mnist768 - MATCHES (60000 * 784)
 	- synthetic - MATCHES (100000 * 100)
+    - cup98lrn - MATCHES (95412 * 481)

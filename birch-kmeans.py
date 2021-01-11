@@ -35,7 +35,7 @@ parameterCombinations = [
     (100, MSE_TO_CONVERGE, 40, "random", 0, "kmeans"),
     (100, MSE_TO_CONVERGE, 50, "random", 0, "kmeans"),
     (100, MSE_TO_CONVERGE, 60, "random", 0, "kmeans"),
-    (100, MSE_TO_CONVERGE_SMALL, 20, "random", 0.01    "kmeans"),
+    (100, MSE_TO_CONVERGE_SMALL, 20, "random", 0.01, "kmeans"),
     (100, MSE_TO_CONVERGE_SMALL, 30, "random", 0, "kmeans"),
     (100, MSE_TO_CONVERGE_SMALL, 40, "random", 0, "kmeans"),
     (100, MSE_TO_CONVERGE_SMALL, 50, "random", 0, "kmeans"),
@@ -45,7 +45,7 @@ parameterCombinations = [
     (100, MSE_TO_CONVERGE, 40, "random", 0, "triangle"),
     (100, MSE_TO_CONVERGE, 50, "random", 0, "triangle"),
     (100, MSE_TO_CONVERGE, 60, "random", 0, "triangle"),
-    (100, MSE_TO_CONVERGE_SMALL, 20, "random", -0.11    "triangle"),
+    (100, MSE_TO_CONVERGE_SMALL, 20, "random", -0.11, "triangle"),
     (100, MSE_TO_CONVERGE_SMALL, 30, "random", 0.04, "triangle"),
     (100, MSE_TO_CONVERGE_SMALL, 40, "random", 0, "triangle"),
     (100, MSE_TO_CONVERGE_SMALL, 50, "random", 0, "triangle"),
@@ -55,7 +55,7 @@ parameterCombinations = [
     (100, MSE_TO_CONVERGE, 40, "random", 0, "enhanced"),
     (100, MSE_TO_CONVERGE, 50, "random", 0, "enhanced"),
     (100, MSE_TO_CONVERGE, 60, "random", 0, "enhanced"),
-    (100, MSE_TO_CONVERGE_SMALL, 20, "random", 0.002    "enhanced"),
+    (100, MSE_TO_CONVERGE_SMALL, 20, "random", 0.002, "enhanced"),
     (100, MSE_TO_CONVERGE_SMALL, 30, "random", 0, "enhanced"),
     (100, MSE_TO_CONVERGE_SMALL, 40, "random", 0, "enhanced"),
     (100, MSE_TO_CONVERGE_SMALL, 50, "random", 0, "enhanced"),
@@ -138,7 +138,7 @@ def runHeuristic(pointList, combination):
 def runNonHeuristic(pointList, combination):
     # unravel the params
     k, kmeansThreshold, centroidsToRemember, seedType, pim, algorithm = combination
-    initialCentroids = resolveInitialCentroids(pointList, seedType)
+    initialCentroids = resolveInitialCentroids(pointList, seedType, k)
 
     repetitionsRun = 0
     timeTakenDefault = []
