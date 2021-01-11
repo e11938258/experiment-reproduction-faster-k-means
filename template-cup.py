@@ -7,7 +7,7 @@ DATASET_BASE_LOCATION = "originalrepo/Dataset/"
 
 def loadCupDataset():
 	data = []
-	data = pd.read_csv(DATASET_BASE_LOCATION + 'cup98LRN.txt', low_memory=False)
+	data = pd.read_csv('originalrepo/Dataset/'cup98LRN.txt', low_memory=False)
 	data = data.fillna(0)
 
 	cat_columns = data.select_dtypes([np.object]).columns
