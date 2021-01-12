@@ -15,9 +15,12 @@ def outputRuntimes(combination, runtimeDefault, runtimeHeuristic, runnerName, da
         os.makedirs(RESULTS_FOLDER)
     # write the runtimes
     with open(RESULTS_FOLDER + datasetName + "-" + algorithm + "-" + str(k) + "-" + str(
-            kmeansThreshold) + "-" + str(seedType), 'w+') as filehandle:
+            kmeansThreshold) + "-" + str(centroidsToRemember) + "-" + str(seedType), 'w+') as filehandle:
         filehandle.write(runnerName + ":" + str(buildConbinationLogText(combination)))
         filehandle.write("\n")
-        filehandle.write(",".join([str(runtime) for runtime in runtimeDefault]))
-        filehandle.write("\n")
-        filehandle.write(",".join([str(runtime) for runtime in runtimeHeuristic]))
+        for replicate in runtimeDefault:
+            filehandle.write("non-heuristic," + str(replicate))
+            filehandle.write("\n")
+        for replicate in runtimeHeuristic:
+            filehandle.write("heuristic," + str(replicate))
+            filehandle.write("\n")

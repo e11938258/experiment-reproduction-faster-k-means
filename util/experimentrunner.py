@@ -17,10 +17,13 @@ from util.resultwriter import *
 SANE_DEFAULT_MSE_IMPROVEMENT_THRESHOLD = 0.01
 
 def calculateThresholdWithPim(nonHeuristicError, pim):
-    threshold =  nonHeuristicError + (nonHeuristicError*pim)/100
-    if threshold == 0:
-        threshold = SANE_DEFAULT_MSE_IMPROVEMENT_THRESHOLD
-    return threshold
+    return nonHeuristicError + (nonHeuristicError*pim)/100
+
+def calculateStagnationPercent(pim):
+    stagnationPercent = abs(pim/10)
+    if stagnationPercent == 0:
+        stagnationPercent = SANE_DEFAULT_MSE_IMPROVEMENT_THRESHOLD
+    return stagnationPercent
 
 def runHeuristic(pointList, combination, nonHeuristicError, initialCentroids, iterationCap):
     # unravel the params
@@ -28,7 +31,7 @@ def runHeuristic(pointList, combination, nonHeuristicError, initialCentroids, it
     # calculate the absolute MSE for heuristic from PIM
     kmeansThresholdWithPIM = calculateThresholdWithPim(nonHeuristicError, pim)
     # stagnation percent
-    stagnationPercent = abs(pim/10)
+    stagnationPercent = calculateStagnationPercent(pim)
 
     print "Error to beat:", kmeansThresholdWithPIM, "nonHeurError:", nonHeuristicError, "PIM:", pim, "Stagnation %:", stagnationPercent
     print "Max allowed iterations:", iterationCap
