@@ -5,11 +5,11 @@ from util.guards import *
 
 
 # repetition configuration
-REPETITION_COUNT = 10
-MSE_TO_CONVERGE = 4.5 * pow(10, 13)
+REPETITION_COUNT = 1
+MSE_TO_CONVERGE = 3
 # MSE_TO_CONVERGE_SMALL = 4.75 * pow(10, 13)
 
-RESULTS_RUNNER_NAME = "martin"
+RESULTS_RUNNER_NAME = "NONE"
 RESULT_BASE_FILENAME = "birch-"
 
 # experiment parameter combinations

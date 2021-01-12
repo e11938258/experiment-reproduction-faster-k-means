@@ -322,7 +322,10 @@ class Kmeans:
 		self.assignPointsInit()
 		self.reCalculateCentroid()
 		print "First Step:",time.time() - self.startTime
-		while(100 * abs(error1-error2)/abs(error1)) > self.kmeansThreshold:
+		# while(100 * abs(error1-error2)/abs(error1)) > self.kmeansThreshold:
+		# modified the original to include a criterion that will actually define the absolute error to reach
+		error2 = 2*self.kmeansThreshold+1
+		while error2 > self.kmeansThreshold:
 			iterationNo += 1
 			self.iteration = iterationNo
 			error1 = self.calculateError(self.centroidList)
@@ -332,6 +335,7 @@ class Kmeans:
 			self.reCalculateCentroid()
 			error2 = self.calculateError(self.centroidList)
 			self.error = error2
+
 		self.assignPointsFinal()
 		self.reCalculateCentroid()
 		error = self.calculateError(self.centroidList)
