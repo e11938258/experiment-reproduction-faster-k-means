@@ -14,10 +14,9 @@ def outputRuntimes(combination, runtimeDefault, runtimeHeuristic, runnerName, da
     if not os.path.exists(RESULTS_FOLDER):
         os.makedirs(RESULTS_FOLDER)
     # write the runtimes
-    timestamp = str(int(time.time()))
     with open(RESULTS_FOLDER + datasetName + "-" + algorithm + "-" + str(k) + "-" + str(
-            kmeansThreshold) + "-" + str(seedType) + "-" + runnerName + "-" + timestamp, 'w') as filehandle:
-        filehandle.write(str(buildConbinationLogText(combination)))
+            kmeansThreshold) + "-" + str(seedType), 'w+') as filehandle:
+        filehandle.write(runnerName + ":" + str(buildConbinationLogText(combination)))
         filehandle.write("\n")
         filehandle.write(",".join([str(runtime) for runtime in runtimeDefault]))
         filehandle.write("\n")
