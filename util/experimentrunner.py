@@ -79,7 +79,7 @@ def logExperimentConfiguration(combination):
     print("Running with", buildConbinationLog(combination))
 
 
-def runExperimentWithConfiguration(pointList, combination, repetitions):
+def runExperimentWithConfiguration(pointList, combination, repetitions, runnerName, resultFilename):
     # print which experiment is being run
     logExperimentConfiguration(combination)
 
@@ -92,4 +92,4 @@ def runExperimentWithConfiguration(pointList, combination, repetitions):
     # run heuristic solution
     timeTakenHeur = runHeuristic(pointList, combination, repetitions, initialCentroids)
     # output the runtimes
-    outputRuntimes(combination, timeTakenDefault, timeTakenHeur, RESULTS_RUNNER_NAME, RESULT_BASE_FILENAME)
+    outputRuntimes(combination, timeTakenDefault, timeTakenHeur, runnerName, resultFilename)
