@@ -14,16 +14,24 @@ import originalrepo.Code.heuristic_enhancedKmeans as heur_enhanced
 from centroidlocator import *
 from util.resultwriter import *
 
-def calculateThresholdWithPim(nonHeuristicError, pim):
-    return nonHeuristicError + (nonHeuristicError*pim)/100
+SANE_DEFAULT_MSE_IMPROVEMENT_THRESHOLD = 0.01
 
-def runHeuristic(pointList, combination, nonHeuristicError, initialCentroids):
+def calculateThresholdWithPim(nonHeuristicError, pim):
+    threshold =  nonHeuristicError + (nonHeuristicError*pim)/100
+    if threshold == 0:
+        threshold = SANE_DEFAULT_MSE_IMPROVEMENT_THRESHOLD
+    return threshold
+
+def runHeuristic(pointList, combination, nonHeuristicError, initialCentroids, iterationCap):
     # unravel the params
     k, kmeansThreshold, centroidsToRemember, seedType, pim, algorithm = combination
     # calculate the absolute MSE for heuristic from PIM
     kmeansThresholdWithPIM = calculateThresholdWithPim(nonHeuristicError, pim)
+    # stagnation percent
+    stagnationPercent = abs(pim/10)
 
-    print "Error to beat:", kmeansThresholdWithPIM, "nonHeurError:", nonHeuristicError, "PIM:", pim
+    print "Error to beat:", kmeansThresholdWithPIM, "nonHeurError:", nonHeuristicError, "PIM:", pim, "Stagnation %:", stagnationPercent
+    print "Max allowed iterations:", iterationCap
 
     start_time = time.time()
     # select and run proper algorithm variant
@@ -31,15 +39,19 @@ def runHeuristic(pointList, combination, nonHeuristicError, initialCentroids):
         heur_kmeans.Kmeans(k, pointList, kmeansThresholdWithPIM, centroidsToRemember, initialCentroids)
     elif algorithm == "triangle":
         # this code was modified to take kmeansThresholdWithPIM as ABSOLUTE error
-        heur_inequality.Kmeans(k, pointList, kmeansThresholdWithPIM, centroidsToRemember, initialCentroids)
+        impl = heur_inequality.Kmeans(k, pointList, kmeansThresholdWithPIM, centroidsToRemember, initialCentroids, iterationCap, stagnationPercent)
     elif algorithm == "enhanced":
         heur_enhanced.Kmeans(k, pointList, kmeansThresholdWithPIM, centroidsToRemember, initialCentroids)
     else:
         raise Exception("Unknown algorithm " + algorithm)
     timeTakenHeur = time.time() - start_time
 
+    mseAchieved = impl.error < kmeansThresholdWithPIM
+    iterations = impl.iteration
+    stagnation = impl.stagnation
+    error = impl.error
     print "Done running the HEURISTIC approach"
-    return timeTakenHeur
+    return timeTakenHeur, mseAchieved, iterations, stagnation, error
 
 
 def runNonHeuristic(pointList, combination, initialCentroids):
@@ -51,12 +63,15 @@ def runNonHeuristic(pointList, combination, initialCentroids):
     if algorithm == "kmeans":
         impl = def_kmeans.Kmeans(k, pointList, kmeansThreshold, initialCentroids)
         nonHeuristicError = impl.error
+        nonHeuristicIterations = impl.iteration
     elif algorithm == "triangle":
         impl = def_inequality.Kmeans(k, pointList, kmeansThreshold, initialCentroids)
         nonHeuristicError = impl.error
+        nonHeuristicIterations = impl.iteration
     elif algorithm == "enhanced":
         impl = def_enhanced.Kmeans(k, pointList, kmeansThreshold, initialCentroids)
         nonHeuristicError = impl.error
+        nonHeuristicIterations = impl.iteration
     else:
         raise Exception("Unknown algorithm " + algorithm)
 
@@ -64,7 +79,7 @@ def runNonHeuristic(pointList, combination, initialCentroids):
 
     print
     "Done running the NON-HEURISTIC approach"
-    return timeTakenDefault, nonHeuristicError
+    return timeTakenDefault, nonHeuristicError, nonHeuristicIterations
 
 
 def buildConbinationLog(combination):
@@ -75,8 +90,12 @@ def buildConbinationLog(combination):
 def logExperimentConfiguration(combination):
     print("Running with", buildConbinationLog(combination))
 
+def calculateHeuristicIterationCap(nonHeuristicIterations, iterationHardCap):
+    if iterationHardCap:
+        return max(3*nonHeuristicIterations, iterationHardCap)
+    return None
 
-def runExperimentWithConfiguration(pointList, combination, repetitions, runnerName, resultFilename):
+def runExperimentWithConfiguration(pointList, combination, repetitions, runnerName, resultFilename, iterationHardCap=None):
     # print which experiment is being run
     logExperimentConfiguration(combination)
 
@@ -91,12 +110,13 @@ def runExperimentWithConfiguration(pointList, combination, repetitions, runnerNa
         initialCentroids = resolveInitialCentroids(pointList, seedType, k)
 
         # run non-heuristic solution
-        timeNonHeur,nonHeuristicError  = runNonHeuristic(pointList, combination, initialCentroids)
-        timeTakenDefault.append(timeNonHeur)
+        timeNonHeur, nonHeuristicError, nonHeuristicIterations  = runNonHeuristic(pointList, combination, initialCentroids)
+        timeTakenDefault.append([timeNonHeur, nonHeuristicError, nonHeuristicIterations])
 
         # run heuristic solution
-        timeHeur = runHeuristic(pointList, combination, nonHeuristicError, initialCentroids)
-        timeTakenHeur.append(timeHeur)
+        iterationCap = calculateHeuristicIterationCap(nonHeuristicIterations, iterationHardCap)
+        timeHeur, mseAchieved, iterations, stagnation, heuristicError = runHeuristic(pointList, combination, nonHeuristicError, initialCentroids, iterationCap)
+        timeTakenHeur.append([timeHeur, mseAchieved, heuristicError, iterations, pim, stagnation])
         repetitionsRun += 1
     
     # output the runtimes

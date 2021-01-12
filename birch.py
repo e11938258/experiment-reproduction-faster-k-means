@@ -5,7 +5,7 @@ from util.guards import *
 
 
 # repetition configuration
-REPETITION_COUNT = 1
+REPETITION_COUNT = 10
 MSE_TO_CONVERGE = 3
 # MSE_TO_CONVERGE_SMALL = 4.75 * pow(10, 13)
 

@@ -49,7 +49,7 @@ class Centroid:
 		
 
 class Kmeans:
-	def __init__(self, k, pointList, kmeansThreshold, centroidsToRemember, initialCentroids = None):
+	def __init__(self, k, pointList, kmeansThreshold, centroidsToRemember, initialCentroids = None, iterationCap = None, mseImprovementPercent=None):
 		self.pointList = []
 		self.numPoints = len(pointList)
 		self.k = k
@@ -67,6 +67,11 @@ class Kmeans:
 		self.r = {}
 		self.oldCentroid = {}
 		self.centroidDistance = {}
+		# added iterationCap as a stopping criterion
+		self.iterationCap = iterationCap
+		# added mse improvement as a stopping criterion
+		self.mseImprovementPercent = mseImprovementPercent
+		self.stagnation = False
 		i = 0
 		temp = [0 for x in range(self.k)]
 		for point in pointList:
@@ -310,6 +315,20 @@ class Kmeans:
   		self.errorList.append(timeStamp)
   		self.ti += 0.5 	
 
+	def stoppingCriterionReached(self, error1, error2):
+		mseReached = self.error < self.kmeansThreshold
+		iterationCapReached = False
+		if self.iterationCap:
+			iterationCapReached = self.iteration >= self.iterationCap
+		notImproving = False
+		if self.mseImprovementPercent:
+			notImproving = (100 * abs(error1-error2)/abs(error1)) < self.mseImprovementPercent
+			self.stagnation = notImproving
+			print "Error1:", error1, "Error2:", error2
+			print "NOT-IMPROVING:", notImproving, "Improvement percent:", (100 * abs(error1-error2)/abs(error1))
+
+		return mseReached or iterationCapReached or notImproving
+
 	def mainFunction(self):
 		self.iteration = 1
 		self.ti = 0.0
@@ -324,8 +343,8 @@ class Kmeans:
 		print "First Step:",time.time() - self.startTime
 		# while(100 * abs(error1-error2)/abs(error1)) > self.kmeansThreshold:
 		# modified the original to include a criterion that will actually define the absolute error to reach
-		error2 = 2*self.kmeansThreshold+1
-		while error2 > self.kmeansThreshold:
+		self.error = error1
+		while not self.stoppingCriterionReached(error1, error2):
 			iterationNo += 1
 			self.iteration = iterationNo
 			error1 = self.calculateError(self.centroidList)
