@@ -6,10 +6,10 @@ from util.guards import *
 
 # repetition configuration
 REPETITION_COUNT = 10
-MSE_TO_CONVERGE = 5 * pow(10, 13)
-MSE_TO_CONVERGE_SMALL = 4.75 * pow(10, 13)
+MSE_TO_CONVERGE = 4.5 * pow(10, 13)
+# MSE_TO_CONVERGE_SMALL = 4.75 * pow(10, 13)
 
-RESULTS_RUNNER_NAME = "NONE"
+RESULTS_RUNNER_NAME = "martin"
 RESULT_BASE_FILENAME = "birch-"
 
 # experiment parameter combinations
@@ -73,4 +73,4 @@ dataset = loadBirchDataset()
 
 # run all experiments
 for combination in parameterCombinations:
-    runExperimentWithConfiguration(dataset, combination, REPETITION_COUNT, runnername, RESULT_BASE_FILENAME)
+    runExperimentWithConfiguration(dataset, combination, REPETITION_COUNT, RESULTS_RUNNER_NAME, RESULT_BASE_FILENAME)
