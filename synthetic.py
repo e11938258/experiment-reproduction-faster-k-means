@@ -56,4 +56,4 @@ dataset = readSyntheticDataset()
 
 # run all experiments
 for combination in parameterCombinations:
-    runExperimentWithConfiguration(dataset, combination, REPETITION_COUNT)
+    runExperimentWithConfiguration(dataset, combination, REPETITION_COUNT, RESULTS_RUNNER_NAME, RESULT_BASE_FILENAME)
