@@ -324,9 +324,6 @@ class Kmeans:
 		if self.mseImprovementPercent:
 			notImproving = (100 * abs(error1-error2)/abs(error1)) < self.mseImprovementPercent
 			self.stagnation = notImproving
-			print "Error1:", error1, "Error2:", error2
-			print "NOT-IMPROVING:", notImproving, "Improvement percent:", (100 * abs(error1-error2)/abs(error1))
-
 		return mseReached or iterationCapReached or notImproving
 
 	def mainFunction(self):
