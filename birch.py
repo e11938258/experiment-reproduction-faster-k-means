@@ -3,63 +3,47 @@ from util.datasetloader import *
 from util.experimentrunner import *
 from util.guards import *
 
+import random
 
 # repetition configuration
-REPETITION_COUNT = 10
+REPETITION_COUNT = 20
 MSE_TO_CONVERGE = 3
 # MSE_TO_CONVERGE_SMALL = 4.75 * pow(10, 13)
 
 RESULTS_RUNNER_NAME = "NONE"
 RESULT_BASE_FILENAME = "birch-"
 
+#random.seed(11941109)
+
 # experiment parameter combinations
 parameterCombinations_table2 = [
     # (k, 	kmeansThreshold, 			centroidsToRemember, 	seedType, 	PIM,	algorithm)
-# random seeded experiments
-    # (100, MSE_TO_CONVERGE, 20, "random", 0.01, "kmeans"),
-    # (100, MSE_TO_CONVERGE, 30, "random", 0, "kmeans"),
-    # (100, MSE_TO_CONVERGE, 40, "random", 0, "kmeans"),
-    # (100, MSE_TO_CONVERGE, 50, "random", 0, "kmeans"),
-    # (100, MSE_TO_CONVERGE, 60, "random", 0, "kmeans"),
+# # random seeded experiments
     (100, MSE_TO_CONVERGE, 20, "random", -0.11, "triangle"),
     (100, MSE_TO_CONVERGE, 30, "random", 0.04, "triangle"),
     (100, MSE_TO_CONVERGE, 40, "random", 0, "triangle"),
     (100, MSE_TO_CONVERGE, 50, "random", 0, "triangle"),
     (100, MSE_TO_CONVERGE, 60, "random", 0, "triangle"),
-    # (100, MSE_TO_CONVERGE, 20, "random", 0.002, "enhanced"),
-    # (100, MSE_TO_CONVERGE, 30, "random", 0, "enhanced"),
-    # (100, MSE_TO_CONVERGE, 40, "random", 0, "enhanced"),
-    # (100, MSE_TO_CONVERGE, 50, "random", 0, "enhanced"),
-    # (100, MSE_TO_CONVERGE, 60, "random", 0, "enhanced"),
-# KPP seeded experiments
-	# (100, MSE_TO_CONVERGE, 20, "KPP", 0, "kmeans"),
- #    (100, MSE_TO_CONVERGE, 30, "KPP", 0, "kmeans"),
- #    (100, MSE_TO_CONVERGE, 40, "KPP", 0, "kmeans"),
- #    (100, MSE_TO_CONVERGE, 50, "KPP", 0, "kmeans"),
- #    (100, MSE_TO_CONVERGE, 60, "KPP", 0, "kmeans"),
+# # KPP seeded experiments
+
     (100, MSE_TO_CONVERGE, 20, "KPP", 0, "triangle"),
     (100, MSE_TO_CONVERGE, 30, "KPP", 0, "triangle"),
     (100, MSE_TO_CONVERGE, 40, "KPP", 0, "triangle"),
     (100, MSE_TO_CONVERGE, 50, "KPP", 0, "triangle"),
     (100, MSE_TO_CONVERGE, 60, "KPP", 0, "triangle"),
-    # (100, MSE_TO_CONVERGE, 20, "KPP", 0.002, "enhanced"),
-    # (100, MSE_TO_CONVERGE, 30, "KPP", 0, "enhanced"),
-    # (100, MSE_TO_CONVERGE, 40, "KPP", 0, "enhanced"),
-    # (100, MSE_TO_CONVERGE, 50, "KPP", 0, "enhanced"),
-    # (100, MSE_TO_CONVERGE, 60, "KPP", 0, "enhanced"),
     ]
 
 parameterCombinations_table3 = [
     # (k, 	kmeansThreshold, 			centroidsToRemember, 	seedType, 	PIM,	algorithm)
-    (50, MSE_TO_CONVERGE, 20, "random", 0.31, "triangle"),
-    (100, MSE_TO_CONVERGE, 30, "random", 0, "triangle"),
+    (50, MSE_TO_CONVERGE, 40, "random", 0.31, "triangle"),
+    (100, MSE_TO_CONVERGE, 40, "random", 0, "triangle"),
     (500, MSE_TO_CONVERGE, 40, "random", 0, "triangle"),
-    (1000, MSE_TO_CONVERGE, 50, "random", 0, "triangle"),
+    (1000, MSE_TO_CONVERGE, 40, "random", 0, "triangle"),
     
-    (50, MSE_TO_CONVERGE, 20, "KPP", 0, "triangle"),
-    (100, MSE_TO_CONVERGE, 30, "KPP", 0, "triangle"),
+    (50, MSE_TO_CONVERGE, 40, "KPP", 0, "triangle"),
+    (100, MSE_TO_CONVERGE, 40, "KPP", 0, "triangle"),
     (500, MSE_TO_CONVERGE, 40, "KPP", 0, "triangle"),
-    (1000, MSE_TO_CONVERGE, 50, "KPP", 0, "triangle"),
+    (1000, MSE_TO_CONVERGE, 40, "KPP", 0, "triangle"),
 ]
 
 # aggregate the parameter combinations
