@@ -6,12 +6,12 @@ import random
 
 # repetition configuration
 REPETITION_COUNT = 20
-MSE_TO_CONVERGE = None
+MSE_TO_CONVERGE = 1
 
-RESULTS_RUNNER_NAME = "NONE"
+RESULTS_RUNNER_NAME = "TEST"
 RESULT_BASE_FILENAME = "birch-"
 
-#random.seed(11941109)
+random.seed(11941109)
 
 # experiment parameter combinations
 parameterCombinations_table2 = [

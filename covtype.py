@@ -5,9 +5,9 @@ from util.guards import *
 
 # repetition configuration
 REPETITION_COUNT = 10
-MSE_TO_CONVERGE = None
+MSE_TO_CONVERGE = 1
 
-RESULTS_RUNNER_NAME = "NONE"
+RESULTS_RUNNER_NAME = "TEST"
 RESULT_BASE_FILENAME = "covtype-"
 
 # experiment parameter combinations
