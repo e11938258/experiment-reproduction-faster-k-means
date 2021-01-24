@@ -10,7 +10,6 @@ MSE_TO_CONVERGE = None
 RESULTS_RUNNER_NAME = "NONE"
 RESULT_BASE_FILENAME = "minst-"
 
-
 # experiment parameter combinations
 parameterCombinations_table2 = [
     # (k, 	kmeansThreshold, 			centroidsToRemember, 	seedType, 	PIM,	algorithm)
@@ -31,15 +30,15 @@ parameterCombinations_table2 = [
 
 parameterCombinations_table3 = [
     # (k, 	kmeansThreshold, 			centroidsToRemember, 	seedType, 	PIM,	algorithm)
-    (50, MSE_TO_CONVERGE, 20, "random", 0.94, "triangle"),
-    (100, MSE_TO_CONVERGE, 30, "random", 0.38, "triangle"),
+    (50, MSE_TO_CONVERGE, 40, "random", 0.94, "triangle"),
+    (100, MSE_TO_CONVERGE, 40, "random", 0.38, "triangle"),
     (500, MSE_TO_CONVERGE, 40, "random", 0.09, "triangle"),
-    (1000, MSE_TO_CONVERGE, 50, "random", 0.13, "triangle"),
+    (1000, MSE_TO_CONVERGE, 40, "random", 0.13, "triangle"),
     
-    (50, MSE_TO_CONVERGE, 20, "KPP", 0.87, "triangle"),
-    (100, MSE_TO_CONVERGE, 30, "KPP", 0.52, "triangle"),
+    (50, MSE_TO_CONVERGE, 40, "KPP", 0.87, "triangle"),
+    (100, MSE_TO_CONVERGE, 40, "KPP", 0.52, "triangle"),
     (500, MSE_TO_CONVERGE, 40, "KPP", 0.23, "triangle"),
-    (1000, MSE_TO_CONVERGE, 50, "KPP", 0.07, "triangle"),
+    (1000, MSE_TO_CONVERGE, 40, "KPP", 0.07, "triangle"),
 ]
 
 

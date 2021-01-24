@@ -2,13 +2,11 @@
 from util.datasetloader import * 
 from util.experimentrunner import *
 from util.guards import *
-
 import random
 
 # repetition configuration
 REPETITION_COUNT = 20
-MSE_TO_CONVERGE = 3
-# MSE_TO_CONVERGE_SMALL = 4.75 * pow(10, 13)
+MSE_TO_CONVERGE = None
 
 RESULTS_RUNNER_NAME = "NONE"
 RESULT_BASE_FILENAME = "birch-"

@@ -30,15 +30,15 @@ parameterCombinations_table2 = [
 
 parameterCombinations_table3 = [
     # (k, 	kmeansThreshold, 			centroidsToRemember, 	seedType, 	PIM,	algorithm)
-    (50, MSE_TO_CONVERGE, 20, "random", 0.01, "triangle"),
-    (100, MSE_TO_CONVERGE, 30, "random", 0.26, "triangle"),
+    (50, MSE_TO_CONVERGE, 40, "random", 0.01, "triangle"),
+    (100, MSE_TO_CONVERGE, 40, "random", 0.26, "triangle"),
     (500, MSE_TO_CONVERGE, 40, "random", 0, "triangle"),
-    (1000, MSE_TO_CONVERGE, 50, "random", 0, "triangle"),
+    (1000, MSE_TO_CONVERGE, 40, "random", 0, "triangle"),
     
-    (50, MSE_TO_CONVERGE, 20, "KPP", 0.02, "triangle"),
-    (100, MSE_TO_CONVERGE, 30, "KPP", 0, "triangle"),
+    (50, MSE_TO_CONVERGE, 40, "KPP", 0.02, "triangle"),
+    (100, MSE_TO_CONVERGE, 40, "KPP", 0, "triangle"),
     (500, MSE_TO_CONVERGE, 40, "KPP", 0, "triangle"),
-    (1000, MSE_TO_CONVERGE, 50, "KPP", 0, "triangle"),
+    (1000, MSE_TO_CONVERGE, 40, "KPP", 0, "triangle"),
 ]
 
 
