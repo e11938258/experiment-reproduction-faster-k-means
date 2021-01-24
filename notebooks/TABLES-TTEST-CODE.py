@@ -7,13 +7,13 @@ import seaborn as sns
 ##  2 random distributions
 #Sample Size
 N = 500
-
-a = np.array([3.05,3.14,2.48,2.26])
+#The arrays represent the reported values and measured values 
+a = np.array(['Reported values'])
 
 b = np.array([1.19,1.21,1.65,1.03])
 
 
-## Calculating the Standard Deviation and Variance for Table 2A
+## Calculating the Standard Deviation and Variance for Tables in the report
 #
 
 
