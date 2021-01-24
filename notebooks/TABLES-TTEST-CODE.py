@@ -6,7 +6,7 @@ import seaborn as sns
 
 ##  2 random distributions
 #Sample Size
-N = 500
+N = 20
 #The arrays represent the reported values and measured values 
 a = np.array(['Reported values'])
 
